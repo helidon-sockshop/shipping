@@ -4,8 +4,13 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
+
 /**
  */
+@ApplicationScoped
+@Alternative
 public class DefaultShipmentRepository implements ShipmentRepository {
 
     private Map<String, Shipment> shipments = new ConcurrentHashMap<>();
