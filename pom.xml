@@ -11,6 +11,7 @@
 
     <modules>
         <module>shipping-core</module>
+        <module>shipping-mongo</module>
     </modules>
 
 </project>
