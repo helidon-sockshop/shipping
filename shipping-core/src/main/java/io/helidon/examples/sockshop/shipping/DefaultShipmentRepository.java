@@ -25,7 +25,7 @@ public class DefaultShipmentRepository implements ShipmentRepository {
 
     @Override
     public Shipment addShipment(Shipment shipment) {
-        shipments.put(shipment.getId(), shipment);
+        shipments.put(shipment.getOrderId(), shipment);
         return shipment;
     }
 }

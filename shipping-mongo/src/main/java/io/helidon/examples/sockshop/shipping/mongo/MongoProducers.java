@@ -5,8 +5,6 @@ import java.util.Collections;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
-import io.helidon.examples.sockshop.shipping.Shipment;
-
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
@@ -49,7 +47,7 @@ public class MongoProducers {
 
     @Produces
     @ApplicationScoped
-    public static MongoCollection<Shipment> shipments(MongoDatabase db) {
-        return db.getCollection("shipments", Shipment.class);
+    public static MongoCollection<MongoShipment> shipments(MongoDatabase db) {
+        return db.getCollection("shipments", MongoShipment.class);
     }
 }

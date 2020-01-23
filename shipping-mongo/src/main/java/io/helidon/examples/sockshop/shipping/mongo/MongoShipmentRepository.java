@@ -26,12 +26,12 @@ public class MongoShipmentRepository extends DefaultShipmentRepository {
     private static final Logger LOGGER = Logger.getLogger(MongoShipmentRepository.class.getName());
 
     @Inject
-    private MongoCollection<Shipment> shipments;
+    private MongoCollection<MongoShipment> shipments;
 
     @Override
     public Collection<Shipment> getAllShipments() {
         List<Shipment> results = new ArrayList<>();
-        shipments.find().forEach((Consumer<? super Shipment>) results::add);
+        shipments.find().forEach((Consumer<? super MongoShipment>) results::add);
         return results;
     }
 
@@ -42,7 +42,7 @@ public class MongoShipmentRepository extends DefaultShipmentRepository {
 
     @Override
     public Shipment addShipment(Shipment shipment) {
-        shipments.insertOne(shipment);
+        shipments.insertOne(new MongoShipment(shipment));
         return shipment;
     }
 }
