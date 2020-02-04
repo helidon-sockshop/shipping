@@ -16,7 +16,23 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class DefaultShipmentRepository implements ShipmentRepository {
 
-    private Map<String, Shipment> shipments = new ConcurrentHashMap<>();
+    private Map<String, Shipment> shipments;
+
+    /**
+     * Construct {@code DefaultShipmentRepository} with an empty storage map.
+     */
+    public DefaultShipmentRepository() {
+        this(new ConcurrentHashMap<>());
+    }
+
+    /**
+     * Construct {@code DefaultShipmentRepository} with the specified storage map.
+     *
+     * @param shipments the storage map to use
+     */
+    protected DefaultShipmentRepository(Map<String, Shipment> shipments) {
+        this.shipments = shipments;
+    }
 
     @Override
     public Shipment getShipment(String orderId) {
@@ -36,5 +52,4 @@ public class DefaultShipmentRepository implements ShipmentRepository {
     public void clear() {
         shipments.clear();
     }
-
 }
