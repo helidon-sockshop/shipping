@@ -1,13 +1,24 @@
 package io.helidon.examples.sockshop.shipping;
 
-import java.util.Collection;
-
 /**
+ * A repository interface that should be implemented by
+ * the various data store integrations.
  */
 public interface ShipmentRepository {
-    Collection<Shipment> getAllShipments();
+    /**
+     * Return shipment for the specified order.
+     *
+     * @param orderId the order identifier
+     *
+     * @return the shipment for the specified order;
+     *         {@code null} if the shipment doesn't exist
+     */
+    Shipment getShipment(String orderId);
 
-    Shipment getShipment(String id);
-
-    Shipment addShipment(Shipment shipment);
+    /**
+     * Save shipment details into the repository.
+     *
+     * @param shipment the shipment to save
+     */
+    void saveShipment(Shipment shipment);
 }

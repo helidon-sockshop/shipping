@@ -1,59 +1,49 @@
 package io.helidon.examples.sockshop.shipping;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.time.LocalDate;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * Shipment information to send as a response to Order service.
+ */
+@Data
+@NoArgsConstructor
+@Entity
 public class Shipment implements Serializable {
+    /**
+     * Order identifier.
+     */
+    @Id
     private String orderId;
+
+    /**
+     * Shipping carrier.
+     */
+    private String carrier;
+
+    /**
+     * Tracking number.
+     */
     private String trackingNumber;
 
-    public Shipment() {
-    }
+    /**
+     * Estimated delivery date.
+     */
+    private LocalDate deliveryDate;
 
-    protected Shipment(String orderId, String trackingNumber) {
+    @Builder
+    Shipment(String orderId, String carrier, String trackingNumber, LocalDate deliveryDate) {
         this.orderId = orderId;
+        this.carrier = carrier;
         this.trackingNumber = trackingNumber;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getTrackingNumber() {
-        return trackingNumber;
-    }
-
-    public void setTrackingNumber(String trackingNumber) {
-        this.trackingNumber = trackingNumber;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Shipment shipment = (Shipment) o;
-        return orderId.equals(shipment.orderId) &&
-                trackingNumber.equals(shipment.trackingNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(orderId, trackingNumber);
-    }
-
-    @Override
-    public String toString() {
-        return "Shipment{" +
-                "orderId='" + orderId + '\'' +
-                ", trackingNumber='" + trackingNumber + '\'' +
-                '}';
+        this.deliveryDate = deliveryDate;
     }
 }

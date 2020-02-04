@@ -1,11 +1,5 @@
 package io.helidon.examples.sockshop.shipping.mongo;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.logging.Logger;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Specializes;
 import javax.inject.Inject;
@@ -14,35 +8,46 @@ import io.helidon.examples.sockshop.shipping.DefaultShipmentRepository;
 import io.helidon.examples.sockshop.shipping.Shipment;
 
 import com.mongodb.client.MongoCollection;
+import org.bson.BsonDocument;
 
 import static com.mongodb.client.model.Filters.eq;
 
 /**
- * @author Aleksandar Seovic  2020.01.21
+ * An implementation of {@link io.helidon.examples.sockshop.shipping.ShipmentRepository}
+ * that that uses MongoDB as a backend data store.
  */
 @ApplicationScoped
 @Specializes
 public class MongoShipmentRepository extends DefaultShipmentRepository {
-    private static final Logger LOGGER = Logger.getLogger(MongoShipmentRepository.class.getName());
+    /**
+     * Mongo collection used to store shipments.
+     */
+    private MongoCollection<Shipment> shipments;
 
+    /**
+     * Construct {@code MongoPaymentRepository} instance.
+     *
+     * @param shipments Mongo collection used to store shipments
+     */
     @Inject
-    private MongoCollection<MongoShipment> shipments;
-
-    @Override
-    public Collection<Shipment> getAllShipments() {
-        List<Shipment> results = new ArrayList<>();
-        shipments.find().forEach((Consumer<? super MongoShipment>) results::add);
-        return results;
+    MongoShipmentRepository(MongoCollection<Shipment> shipments) {
+        this.shipments = shipments;
     }
 
     @Override
-    public Shipment getShipment(String id) {
-        return shipments.find(eq("_id", id)).first();
+    public Shipment getShipment(String orderId) {
+        return shipments.find(eq("orderId", orderId)).first();
     }
 
     @Override
-    public Shipment addShipment(Shipment shipment) {
-        shipments.insertOne(new MongoShipment(shipment));
-        return shipment;
+    public void saveShipment(Shipment shipment) {
+        shipments.insertOne(shipment);
+    }
+
+    // ---- helpers ---------------------------------------------------------
+
+    @Override
+    public void clear() {
+        shipments.deleteMany(new BsonDocument());
     }
 }
