@@ -9,12 +9,15 @@ import javax.transaction.Transactional;
 import io.helidon.examples.sockshop.shipping.Shipment;
 import io.helidon.examples.sockshop.shipping.DefaultShipmentRepository;
 
+import org.eclipse.microprofile.opentracing.Traced;
+
 /**
  * An implementation of {@link io.helidon.examples.sockshop.shipping.ShipmentRepository}
  * that that uses relational database (via JPA) as a backend data store.
  */
 @ApplicationScoped
 @Specializes
+@Traced
 public class JpaShipmentRepository extends DefaultShipmentRepository {
 
     @PersistenceContext

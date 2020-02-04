@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import io.helidon.examples.sockshop.shipping.Shipment;
 import io.helidon.examples.sockshop.shipping.DefaultShipmentRepository;
 
+import org.eclipse.microprofile.opentracing.Traced;
 import org.redisson.api.RMap;
 
 /**
@@ -15,6 +16,7 @@ import org.redisson.api.RMap;
  */
 @ApplicationScoped
 @Specializes
+@Traced
 public class RedisShipmentRepository extends DefaultShipmentRepository {
     @Inject
     public RedisShipmentRepository(RMap<String, Shipment> shipments) {
