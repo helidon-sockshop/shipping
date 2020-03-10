@@ -1,8 +1,6 @@
 package io.helidon.examples.sockshop.shipping;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.UUID;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
