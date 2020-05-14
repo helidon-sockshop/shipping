@@ -1,27 +1,31 @@
 package io.helidon.examples.sockshop.shipping.jpa;
 
+import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Specializes;
+import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import io.helidon.examples.sockshop.shipping.Shipment;
-import io.helidon.examples.sockshop.shipping.DefaultShipmentRepository;
+import io.helidon.examples.sockshop.shipping.ShipmentRepository;
 
 import org.eclipse.microprofile.opentracing.Traced;
+
+import static javax.interceptor.Interceptor.Priority.APPLICATION;
 
 /**
  * An implementation of {@link io.helidon.examples.sockshop.shipping.ShipmentRepository}
  * that that uses relational database (via JPA) as a backend data store.
  */
 @ApplicationScoped
-@Specializes
+@Alternative
+@Priority(APPLICATION)
 @Traced
-public class JpaShipmentRepository extends DefaultShipmentRepository {
+public class JpaShipmentRepository implements ShipmentRepository {
 
     @PersistenceContext
-    private EntityManager em;
+    protected EntityManager em;
 
     @Override
     @Transactional
@@ -33,11 +37,5 @@ public class JpaShipmentRepository extends DefaultShipmentRepository {
     @Transactional
     public Shipment getShipment(String orderId) {
         return em.find(Shipment.class, orderId);
-    }
-
-    @Override
-    @Transactional
-    public void clear() {
-        em.createQuery("delete from Shipment").executeUpdate();
     }
 }

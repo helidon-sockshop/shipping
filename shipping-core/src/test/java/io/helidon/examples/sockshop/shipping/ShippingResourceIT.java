@@ -6,7 +6,7 @@ import io.helidon.microprofile.server.Server;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.jboss.weld.proxy.WeldClientProxy;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,21 +45,16 @@ public class ShippingResourceIT {
         SERVER.stop();
     }
 
-    private ShipmentRepository shipments;
+    private TestShipmentRepository shipments;
 
     @BeforeEach
-    void setup() throws Exception {
+    void setup() {
         // Configure RestAssured to run tests against our application
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = SERVER.port();
 
-        shipments = SERVER.cdiContainer().select(ShipmentRepository.class).get();
-
-        // oh, boy... not pretty, but probably the best we can do
-        // without adding clear() to public interface
-        WeldClientProxy proxy = (WeldClientProxy) shipments;
-        Object o = proxy.getMetadata().getContextualInstance();
-        o.getClass().getMethod("clear").invoke(o);
+        shipments = SERVER.cdiContainer().select(TestShipmentRepository.class).get();
+        shipments.clear();
     }
 
     @Test

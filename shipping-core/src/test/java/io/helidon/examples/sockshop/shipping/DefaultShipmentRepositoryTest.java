@@ -5,12 +5,7 @@ package io.helidon.examples.sockshop.shipping;
  */
 public class DefaultShipmentRepositoryTest extends ShipmentRepositoryTest {
     @Override
-    protected ShipmentRepository getShipmentRepository() {
-        return new DefaultShipmentRepository();
-    }
-
-    @Override
-    protected void clearRepository(ShipmentRepository repository) {
-        ((DefaultShipmentRepository) repository).clear();
+    protected TestShipmentRepository getShipmentRepository() {
+        return new TestDefaultShipmentRepository();
     }
 }

@@ -16,14 +16,13 @@ import static org.hamcrest.Matchers.nullValue;
  */
 public abstract class ShipmentRepositoryTest {
 
-    private ShipmentRepository shipments = getShipmentRepository();
+    private final TestShipmentRepository shipments = getShipmentRepository();
 
-    protected abstract ShipmentRepository getShipmentRepository();
-    protected abstract void clearRepository(ShipmentRepository shipments);
+    protected abstract TestShipmentRepository getShipmentRepository();
 
     @BeforeEach
     void setup() {
-        clearRepository(shipments);
+        shipments.clear();
     }
 
     @Test

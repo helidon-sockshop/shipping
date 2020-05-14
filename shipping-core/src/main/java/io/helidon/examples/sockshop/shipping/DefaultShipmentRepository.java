@@ -3,9 +3,12 @@ package io.helidon.examples.sockshop.shipping;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.opentracing.Traced;
+
+import static javax.interceptor.Interceptor.Priority.APPLICATION;
 
 /**
  * Simple in-memory implementation of {@link io.helidon.examples.sockshop.shipping.ShipmentRepository}
@@ -16,10 +19,11 @@ import org.eclipse.microprofile.opentracing.Traced;
  * API testing and quick demos.
  */
 @ApplicationScoped
+@Priority(APPLICATION - 10)
 @Traced
 public class DefaultShipmentRepository implements ShipmentRepository {
 
-    private Map<String, Shipment> shipments;
+    protected Map<String, Shipment> shipments;
 
     /**
      * Construct {@code DefaultShipmentRepository} with an empty storage map.
@@ -45,14 +49,5 @@ public class DefaultShipmentRepository implements ShipmentRepository {
     @Override
     public void saveShipment(Shipment shipment) {
         shipments.put(shipment.getOrderId(), shipment);
-    }
-
-    // ---- helpers ---------------------------------------------------------
-
-    /**
-     * Helper to clear this repository for testing.
-     */
-    public void clear() {
-        shipments.clear();
     }
 }

@@ -1,7 +1,8 @@
 package io.helidon.examples.sockshop.shipping.jpa;
 
-import io.helidon.examples.sockshop.shipping.ShipmentRepository;
 import io.helidon.examples.sockshop.shipping.ShipmentRepositoryTest;
+import io.helidon.examples.sockshop.shipping.TestShipmentRepository;
+
 import io.helidon.microprofile.server.Server;
 
 import org.junit.jupiter.api.AfterAll;
@@ -33,12 +34,7 @@ public class JpaShipmentRepositoryIT extends ShipmentRepositoryTest {
     }
 
     @Override
-    protected ShipmentRepository getShipmentRepository() {
-        return SERVER.cdiContainer().select(ShipmentRepository.class).get();
-    }
-
-    @Override
-    protected void clearRepository(ShipmentRepository repository) {
-        ((JpaShipmentRepository) repository).clear();
+    protected TestShipmentRepository getShipmentRepository() {
+        return SERVER.cdiContainer().select(TestShipmentRepository.class).get();
     }
 }
