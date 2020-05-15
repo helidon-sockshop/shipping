@@ -6,13 +6,16 @@ The Shipping Service is implemented as a multi-module project containing the fol
 domain model, the REST service itself, as well as the data repository abstraction and its 
 in-memory implementation;
 
-2. **[shipping-mongo](./shipping-mongo)** contains the data repository implementation for MongoDB 
+2. **[shipping-coherence](./shipping-coherence)** contains the data repository implementation for 
+Coherence backend
+
+3. **[shipping-mongo](./shipping-mongo)** contains the data repository implementation for MongoDB 
 backend
 
-3. **[shipping-mysql](./shipping-mysql)** contains the data repository implementation for MySQL 
+4. **[shipping-mysql](./shipping-mysql)** contains the data repository implementation for MySQL 
 backend (using JPA)
 
-4. **[shipping-redis](./shipping-redis)** contains the data repository implementation for Redis 
+5. **[shipping-redis](./shipping-redis)** contains the data repository implementation for Redis 
 backend (using Redisson client)
 
 ## API

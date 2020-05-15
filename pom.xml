@@ -11,6 +11,7 @@
 
     <modules>
         <module>shipping-core</module>
+        <module>shipping-coherence</module>
         <module>shipping-mongo</module>
         <module>shipping-mysql</module>
         <module>shipping-redis</module>
