@@ -18,23 +18,19 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
  */
 @ApplicationScoped
 @Path("/shipping")
-public class ShippingResource {
+public class ShippingResource implements ShippingApi {
     /**
      * Shipment repository to use.
      */
     @Inject
     private ShipmentRepository shipments;
 
-    @GET
-    @Path("{orderId}")
-    @Produces(APPLICATION_JSON)
-    public Shipment getShipmentByOrderId(@PathParam("orderId") String orderId) {
+    @Override
+    public Shipment getShipmentByOrderId(String orderId) {
         return shipments.getShipment(orderId);
     }
 
-    @POST
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+    @Override
     public Shipment ship(ShippingRequest req) {
         // defaults
         String carrier = "USPS";

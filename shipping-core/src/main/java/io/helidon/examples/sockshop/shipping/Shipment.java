@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 /**
  * Shipment information to send as a response to Order service.
@@ -17,26 +18,31 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
+@Schema(description = "Shipment information to send as a response to Order service")
 public class Shipment implements Serializable {
     /**
      * Order identifier.
      */
     @Id
+    @Schema(description = "Order identifier")
     private String orderId;
 
     /**
      * Shipping carrier.
      */
+    @Schema(description = "Shipping carrier")
     private String carrier;
 
     /**
      * Tracking number.
      */
+    @Schema(description = "racking number")
     private String trackingNumber;
 
     /**
      * Estimated delivery date.
      */
+    @Schema(description = "Estimated delivery date")
     private LocalDate deliveryDate;
 
     @Builder
