@@ -15,13 +15,13 @@ public interface ShippingApi {
     @GET
     @Path("{orderId}")
     @Produces(APPLICATION_JSON)
-    @Operation(description = "Return the Shipment for the specified order")
+    @Operation(summary = "Return the Shipment for the specified order")
     Shipment getShipmentByOrderId(@Parameter(description = "Order identifier")
                                   @PathParam("orderId") String orderId);
 
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Operation(description = "Ship the specified shipping request")
+    @Operation(summary = "Ship the specified shipping request")
     Shipment ship(@Parameter(description = "Shipping request") ShippingRequest req);
 }
