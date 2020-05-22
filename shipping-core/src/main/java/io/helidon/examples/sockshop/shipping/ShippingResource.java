@@ -4,20 +4,19 @@ import java.time.LocalDate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import io.helidon.microprofile.grpc.core.GrpcMarshaller;
+import io.helidon.microprofile.grpc.core.RpcService;
+import io.helidon.microprofile.grpc.core.Unary;
 
 /**
- * Implementation of the Shipping Service REST API.
+ * Implementation of the Shipping Service REST and gRPC API.
  */
 @ApplicationScoped
 @Path("/shipping")
+@RpcService(name = "ShippingGrpc")
+@GrpcMarshaller("jsonb")
 public class ShippingResource implements ShippingApi {
     /**
      * Shipment repository to use.
@@ -26,11 +25,13 @@ public class ShippingResource implements ShippingApi {
     private ShipmentRepository shipments;
 
     @Override
+    @Unary
     public Shipment getShipmentByOrderId(String orderId) {
         return shipments.getShipment(orderId);
     }
 
     @Override
+    @Unary
     public Shipment ship(ShippingRequest req) {
         // defaults
         String carrier = "USPS";
