@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import io.helidon.microprofile.grpc.client.GrpcClientProxyBuilder;
 import io.helidon.microprofile.server.Server;
 
-import io.grpc.inprocess.InProcessChannelBuilder;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +21,7 @@ import static org.hamcrest.Matchers.is;
  */
 public class ShippingGrpcIT {
     protected static Server SERVER;
+    private static ShippingClient CLIENT;
 
     /**
      * This will start the application on ephemeral port to avoid port conflicts.
@@ -34,6 +33,7 @@ public class ShippingGrpcIT {
         System.setProperty("tracing.global", "false");
         System.setProperty("grpc.port", "0");
         SERVER = Server.builder().port(0).build().start();
+        CLIENT = GrpcClientProxyBuilder.create(ShippingClient.class).build();
     }
 
     /**
@@ -46,33 +46,29 @@ public class ShippingGrpcIT {
 
     private TestShipmentRepository shipments;
 
-    private ShippingClient client;
-
     @BeforeEach
     void setup() {
-        client = GrpcClientProxyBuilder.create(InProcessChannelBuilder.forName("grpc.server").usePlaintext().build(),
-                                               ShippingClient.class).build();
         shipments = SERVER.cdiContainer().select(TestShipmentRepository.class).get();
         shipments.clear();
     }
 
     @Test
     void testFedEx() {
-        Shipment shipment = client.ship(shippingRequest("A123", 1));
+        Shipment shipment = CLIENT.ship(shippingRequest("A123", 1));
         assertThat(shipment.getCarrier(), is("FEDEX"));
         assertThat(shipment.getDeliveryDate(), is(LocalDate.now().plusDays(1)));
     }
 
     @Test
     void testUPS() {
-        Shipment shipment = client.ship(shippingRequest("A456", 3));
+        Shipment shipment = CLIENT.ship(shippingRequest("A456", 3));
         assertThat(shipment.getCarrier(), is("UPS"));
         assertThat(shipment.getDeliveryDate(), is(LocalDate.now().plusDays(3)));
     }
 
     @Test
     void testUSPS() {
-        Shipment shipment = client.ship(shippingRequest("A789", 10));
+        Shipment shipment = CLIENT.ship(shippingRequest("A789", 10));
         assertThat(shipment.getCarrier(), is("USPS"));
         assertThat(shipment.getDeliveryDate(), is(LocalDate.now().plusDays(5)));
     }
@@ -82,7 +78,7 @@ public class ShippingGrpcIT {
         LocalDate deliveryDate = LocalDate.now().plusDays(2);
         shipments.saveShipment(shipment("A123", "UPS", "1Z999AA10123456784", deliveryDate));
 
-        Shipment shipment = client.getShipmentByOrderId("A123");
+        Shipment shipment = CLIENT.getShipmentByOrderId("A123");
         assertThat(shipment.getOrderId(), is("A123"));
         assertThat(shipment.getCarrier(), is("UPS"));
         assertThat(shipment.getTrackingNumber(), is("1Z999AA10123456784"));
