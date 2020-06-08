@@ -35,7 +35,6 @@ import org.eclipse.microprofile.metrics.annotation.Metered;
 @Path("/shipping")
 @RpcService(name = "ShippingGrpc")
 @GrpcMarshaller("jsonb")
-@Metered
 public class ShippingResource implements ShippingApi {
     /**
      * Shipment repository to use.
@@ -51,6 +50,7 @@ public class ShippingResource implements ShippingApi {
 
     @Override
     @Unary
+    @Metered
     public Shipment ship(ShippingRequest req) {
         // defaults
         String carrier = "USPS";
