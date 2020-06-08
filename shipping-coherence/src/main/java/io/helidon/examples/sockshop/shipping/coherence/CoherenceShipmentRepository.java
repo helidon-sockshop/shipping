@@ -25,8 +25,8 @@ import javax.inject.Inject;
 import io.helidon.examples.sockshop.shipping.Shipment;
 import io.helidon.examples.sockshop.shipping.DefaultShipmentRepository;
 
-import com.oracle.coherence.cdi.Cache;
-import com.tangosol.net.NamedCache;
+import com.oracle.coherence.cdi.Name;
+import com.tangosol.net.NamedMap;
 import org.eclipse.microprofile.opentracing.Traced;
 
 import static javax.interceptor.Interceptor.Priority.APPLICATION;
@@ -41,7 +41,7 @@ import static javax.interceptor.Interceptor.Priority.APPLICATION;
 @Traced
 public class CoherenceShipmentRepository extends DefaultShipmentRepository {
     @Inject
-    public CoherenceShipmentRepository(@Cache("shipments") NamedCache<String, Shipment> shipments) {
+    public CoherenceShipmentRepository(@Name("shipments") NamedMap<String, Shipment> shipments) {
         super(shipments);
     }
 }
