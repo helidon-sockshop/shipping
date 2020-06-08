@@ -26,8 +26,6 @@ import io.helidon.microprofile.grpc.core.GrpcMarshaller;
 import io.helidon.microprofile.grpc.core.RpcService;
 import io.helidon.microprofile.grpc.core.Unary;
 
-import org.eclipse.microprofile.metrics.annotation.Metered;
-
 /**
  * Implementation of the Shipping Service REST and gRPC API.
  */
@@ -50,7 +48,6 @@ public class ShippingResource implements ShippingApi {
 
     @Override
     @Unary
-    @Metered
     public Shipment ship(ShippingRequest req) {
         // defaults
         String carrier = "USPS";
