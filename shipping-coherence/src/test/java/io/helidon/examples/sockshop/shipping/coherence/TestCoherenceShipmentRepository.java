@@ -23,8 +23,8 @@ import javax.inject.Inject;
 import io.helidon.examples.sockshop.shipping.Shipment;
 import io.helidon.examples.sockshop.shipping.TestShipmentRepository;
 
-import com.oracle.coherence.cdi.Cache;
-import com.tangosol.net.NamedCache;
+import com.oracle.coherence.cdi.Name;
+import com.tangosol.net.NamedMap;
 
 import static javax.interceptor.Interceptor.Priority.APPLICATION;
 
@@ -32,7 +32,7 @@ import static javax.interceptor.Interceptor.Priority.APPLICATION;
 @Priority(APPLICATION + 5)
 public class TestCoherenceShipmentRepository extends CoherenceShipmentRepository implements TestShipmentRepository {
     @Inject
-    TestCoherenceShipmentRepository(@Cache("shipments") NamedCache<String, Shipment> shipments) {
+    TestCoherenceShipmentRepository(@Name("shipments") NamedMap<String, Shipment> shipments) {
         super(shipments);
     }
 
