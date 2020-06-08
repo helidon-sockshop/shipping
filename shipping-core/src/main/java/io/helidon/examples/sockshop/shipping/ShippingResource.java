@@ -26,6 +26,8 @@ import io.helidon.microprofile.grpc.core.GrpcMarshaller;
 import io.helidon.microprofile.grpc.core.RpcService;
 import io.helidon.microprofile.grpc.core.Unary;
 
+import org.eclipse.microprofile.metrics.annotation.Timed;
+
 /**
  * Implementation of the Shipping Service REST and gRPC API.
  */
@@ -33,6 +35,7 @@ import io.helidon.microprofile.grpc.core.Unary;
 @Path("/shipping")
 @RpcService(name = "ShippingGrpc")
 @GrpcMarshaller("jsonb")
+@Timed
 public class ShippingResource implements ShippingApi {
     /**
      * Shipment repository to use.
