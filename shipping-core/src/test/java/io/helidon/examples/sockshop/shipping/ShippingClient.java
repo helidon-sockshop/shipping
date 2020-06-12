@@ -8,10 +8,10 @@
 package io.helidon.examples.sockshop.shipping;
 
 import io.helidon.microprofile.grpc.core.GrpcMarshaller;
-import io.helidon.microprofile.grpc.core.RpcService;
+import io.helidon.microprofile.grpc.core.Grpc;
 import io.helidon.microprofile.grpc.core.Unary;
 
-@RpcService(name = "ShippingGrpc")
+@Grpc(name = "ShippingGrpc")
 @GrpcMarshaller("jsonb")
 public interface ShippingClient {
     @Unary

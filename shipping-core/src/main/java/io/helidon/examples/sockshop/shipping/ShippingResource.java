@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Path;
 
 import io.helidon.microprofile.grpc.core.GrpcMarshaller;
-import io.helidon.microprofile.grpc.core.RpcService;
+import io.helidon.microprofile.grpc.core.Grpc;
 import io.helidon.microprofile.grpc.core.Unary;
 
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -24,7 +24,7 @@ import org.eclipse.microprofile.metrics.annotation.Timed;
  */
 @ApplicationScoped
 @Path("/shipping")
-@RpcService(name = "ShippingGrpc")
+@Grpc(name = "ShippingGrpc")
 @GrpcMarshaller("jsonb")
 @Timed
 public class ShippingResource implements ShippingApi {

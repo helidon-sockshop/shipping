@@ -9,7 +9,9 @@ package io.helidon.examples.sockshop.shipping;
 
 import java.time.LocalDate;
 
-import io.helidon.microprofile.grpc.client.GrpcClientProxyBuilder;
+import javax.enterprise.inject.spi.CDI;
+
+import io.helidon.microprofile.grpc.client.GrpcProxyBuilder;
 import io.helidon.microprofile.server.Server;
 
 import org.junit.jupiter.api.AfterAll;
@@ -40,7 +42,7 @@ public class ShippingGrpcIT {
         System.setProperty("tracing.global", "false");
         System.setProperty("grpc.port", "0");
         SERVER = Server.builder().port(0).build().start();
-        CLIENT = GrpcClientProxyBuilder.create(ShippingClient.class).build();
+        CLIENT = GrpcProxyBuilder.create(ShippingClient.class).build();
     }
 
     /**
@@ -55,7 +57,7 @@ public class ShippingGrpcIT {
 
     @BeforeEach
     void setup() {
-        shipments = SERVER.cdiContainer().select(TestShipmentRepository.class).get();
+        shipments = CDI.current().select(TestShipmentRepository.class).get();
         shipments.clear();
     }
 

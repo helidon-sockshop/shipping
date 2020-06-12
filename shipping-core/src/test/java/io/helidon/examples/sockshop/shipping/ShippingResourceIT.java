@@ -9,6 +9,8 @@ package io.helidon.examples.sockshop.shipping;
 
 import java.time.LocalDate;
 
+import javax.enterprise.inject.spi.CDI;
+
 import io.helidon.microprofile.server.Server;
 
 import io.restassured.RestAssured;
@@ -60,7 +62,7 @@ public class ShippingResourceIT {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = SERVER.port();
 
-        shipments = SERVER.cdiContainer().select(TestShipmentRepository.class).get();
+        shipments = CDI.current().select(TestShipmentRepository.class).get();
         shipments.clear();
     }
 

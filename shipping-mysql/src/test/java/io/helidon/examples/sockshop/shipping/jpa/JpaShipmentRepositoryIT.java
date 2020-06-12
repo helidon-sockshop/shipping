@@ -7,6 +7,8 @@
 
 package io.helidon.examples.sockshop.shipping.jpa;
 
+import javax.enterprise.inject.spi.CDI;
+
 import io.helidon.examples.sockshop.shipping.ShipmentRepositoryTest;
 import io.helidon.examples.sockshop.shipping.TestShipmentRepository;
 
@@ -42,6 +44,6 @@ public class JpaShipmentRepositoryIT extends ShipmentRepositoryTest {
 
     @Override
     protected TestShipmentRepository getShipmentRepository() {
-        return SERVER.cdiContainer().select(TestShipmentRepository.class).get();
+        return CDI.current().select(TestShipmentRepository.class).get();
     }
 }
