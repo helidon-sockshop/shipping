@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import io.helidon.examples.sockshop.shipping.Shipment;
 import io.helidon.examples.sockshop.shipping.DefaultShipmentRepository;
 
-import com.oracle.coherence.inject.Name;
+import com.oracle.coherence.cdi.Name;
 import com.tangosol.net.NamedMap;
 import org.eclipse.microprofile.opentracing.Traced;
 
